@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackhance.dao.BlogMapper">
+    <select id="getBlogs" resultType="blog">
+        select * from `blog`
+    </select>
+
+    <insert id="insertBlog">
+        insert into `blog`(`id`, title, author, create_time, views)
+        values(#{id}, #{title}, #{author}, #{createTime}, #{views})
+    </insert>
+
+    <!-- if语句 -->
+    <select id="getBlogsIf" resultType="blog" parameterType="map">
+        select * from `blog`
+        <where>
+            <if test="author != null">author = #{author}</if>
+            <include refid="title_view_spin"/>
+        </where>
+    </select>
+
+    <!-- 抽取代码片段 -->
+    <sql id="title_view_spin">
+        <if test="title != null">and title = #{title},</if>
+        <if test="views != null">and views = #{views}</if>
+    </sql>
+
+    <!-- choose语句 -->
+    <select id="getBlogsWhen" resultType="blog" parameterType="map">
+        select * from `blog`
+        <where>
+            <choose>
+                <when test="title != null">and title= #{title}</when>
+                <when test="views != null">and views= #{views}</when>
+                <otherwise>and author = #{author}</otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!-- set语句 -->
+    <update id="updateBlog" parameterType="map">
+        update `blog`
+        <set>
+            <if test="title != null">title = #{title},</if>
+            <if test="views != null">views = #{views}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- foreach语句 -->
+    <select id="getBlogsForeach" resultType="blog" parameterType="map">
+        select * from `blog`
+        <where>
+            <foreach collection="ids" open="id in (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
+    </select>
+
+</mapper>

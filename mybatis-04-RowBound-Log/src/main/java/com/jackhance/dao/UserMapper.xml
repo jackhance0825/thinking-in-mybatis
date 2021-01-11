@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackhance.dao.UserMapper">
+    <!--    <select id="getUserList" resultType="user">-->
+    <!--        select * from `user`;-->
+    <!--    </select>-->
+
+    <!-- 问题：处理属性名与字段名不一致 -->
+    <!-- 方式1：别名 -->
+    <!--    <select id="getUserList" resultType="user">-->
+    <!--        select `id`, `name`, pwd as `password` from `user`;-->
+    <!--    </select>-->
+
+
+    <!-- 方式2：resultMap -->
+    <resultMap id="userMap" type="user">
+        <id column="pwd" property="password"/>
+    </resultMap>
+
+    <select id="getUserList" resultMap="userMap">
+        select * from `user`;
+    </select>
+
+    <!-- 问题2： 分页-->
+    <!-- 方式1：limit -->
+    <select id="getUserListByLimit" resultMap="userMap" parameterType="map">
+        select * from `user` Limit #{offset}, #{pageSize};
+    </select>
+
+    <!-- 方式2：RowBounds -->
+    <select id="getUserListByRowBounds" resultMap="userMap">
+        select * from `user`;
+    </select>
+
+</mapper>

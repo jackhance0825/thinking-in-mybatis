@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 引入外部化配置 -->
+    <properties resource="META-INF/db.properties"/>
+
+    <!-- 类型别名 -->
+    <typeAliases>
+        <!-- 方式一：DIY定义 -->
+        <typeAlias type="com.jackhance.pojo.User" alias="UserType1"/>
+        <!-- 方式二：包下全部POJO类定义别名，别名为首字母小写 -->
+        <package name="com.jackhance.pojo"/>
+        <!-- 方式三：方式二 + @Alias -->
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 映射器 -->
+    <mappers>
+        <!-- 方式1：使用映射器接口实现类的完全限定类名 -->
+<!--        <mapper class="com.jackhance.dao.UserMapper"/>-->
+        <!-- 方式2：使用相对于类路径的资源引用 -->
+<!--        <mapper resource="com/jackhance/dao/UserMapper.xml"/>-->
+        <!-- 方式3(推荐)：将包内的映射器接口实现全部注册为映射器 -->
+        <package name="com.jackhance.dao"/>
+    </mappers>
+</configuration>

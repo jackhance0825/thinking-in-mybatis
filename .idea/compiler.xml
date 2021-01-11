@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="mybatis-06-collection" />
+        <module name="mybatis-02-props-typeAlias-mapper" />
+        <module name="mybatis-04-RowBound-Log" />
+        <module name="mybatis-08-cache" />
+        <module name="mybatis-03-attrDiff" />
+        <module name="mybatis-05-Annotation" />
+        <module name="mybatis-01-CRUD" />
+        <module name="mybatis-06-association" />
+        <module name="mybatis-07-dynamicSQL" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 引入外部化配置 -->
+    <properties resource="META-INF/db.properties"/>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!-- 映射数据库表字段名create_time 到pojo类字段createTime -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 开启所有Mapper的二级缓存 -->
+<!--        <setting name="cacheEnabled" value="true"/>-->
+    </settings>
+    
+    <typeAliases>
+        <package name="com.jackhance.pojo"/>
+    </typeAliases>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!-- 映射器 -->
+    <mappers>
+        <package name="com.jackhance.dao"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackhance.dao.UserMapper">
+    <!-- 开启二级缓存 -->
+    <!-- 二级缓存是事务性的。这意味着，当 SqlSession 完成并提交时，或是完成并回滚，但没有执行 flushCache=true 的 insert/delete/update 语句时，缓存会获得更新。 -->
+    <!--    <cache eviction="LRU"-->
+    <!--            flushInterval="60000"-->
+    <!--            size="512"-->
+    <!--            readOnly="true"/>-->
+
+    <!-- 自定义缓存器 -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache">
+        <property name="timeToIdleSeconds" value="3600"/>
+        <property name="timeToLiveSeconds" value="3600"/>
+        <!-- 同ehcache参数maxElementsInMemory -->
+        <property name="maxEntriesLocalHeap" value="1000"/>
+        <!-- 同ehcache参数maxElementsOnDisk -->
+        <property name="maxEntriesLocalDisk" value="10000000"/>
+        <property name="memoryStoreEvictionPolicy" value="LRU"/>
+    </cache>
+
+    <select id="getUserById" resultType="user" flushCache="false" useCache="true">
+        select * from `user` where `id` = #{id};
+    </select>
+
+    <update id="updateUser" flushCache="true">
+        update `user` set name=#{name}, pwd=#{pwd} where id=#{id}
+    </update>
+</mapper>

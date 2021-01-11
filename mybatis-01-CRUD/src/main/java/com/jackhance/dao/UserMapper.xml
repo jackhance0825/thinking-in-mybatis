@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackhance.dao.UserMapper">
+
+    <!-- 单参数 -->
+    <select id="getUserList" resultType="com.jackhance.pojo.User">
+        select * from `user`;
+    </select>
+
+    <select id="getUserById" resultType="com.jackhance.pojo.User"
+            parameterType="int">
+        select * from `user` where `id` = #{id};
+    </select>
+
+    <insert id="insertUser">
+        insert into `user`(`id`, `name`, `pwd`) values(#{id}, #{name}, #{pwd})
+    </insert>
+
+    <delete id="deleteUserById">
+        delete from `user` where id=#{id}
+    </delete>
+    <delete id="deleteUserByName">
+        delete from `user` where `name`=#{name}
+    </delete>
+
+    <update id="updateUser">
+        update `user` set name=#{name}, pwd=#{pwd} where id=#{id}
+    </update>
+
+    <!-- 多参数使用 注解 或者 map (parameterType都是缺省的，可通过反射确定)-->
+    <insert id="insertUser2" parameterType="map">
+        insert into `user`(`id`, `name`, `pwd`) values(#{userid}, #{username}, #{userpassword})
+    </insert>
+
+    <!-- 模糊查询 -->
+    <select id="selectUserByKey" resultType="com.jackhance.pojo.User">
+        <!--        select * from `user` where name like #{value};-->
+        <!-- 避免sql注入 -->
+        <!--
+            select * from `user` where name like %val% or 1=1;
+        -->
+        select * from `user` where name like "%"#{value}"%";
+    </select>
+</mapper>

@@ -1,0 +1,10 @@
+# Project exclude paths
+/mybatis-01-CRUD/target/
+/mybatis-02-props-typeAlias-mapper/target/
+/mybatis-03-attrDiff/target/
+/mybatis-04-RowBound-Log/target/
+/mybatis-05-Annotation/target/
+/mybatis-06-association/target/
+/mybatis-06-collection/target/
+/mybatis-07-dynamicSQL/target/
+/mybatis-08-cache/target/

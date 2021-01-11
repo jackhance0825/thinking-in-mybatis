@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackhance.dao.StudentMapper">
+
+    <!-- 多对一 或者 一对一 -->
+
+    <!-- 方式1（子查询） -->
+    <select id="getStudentById" resultMap="studentMap1">
+        select * from student where id=#{id}
+    </select>
+
+    <resultMap id="studentMap1" type="student">
+        <id property="id" column="id"/>
+        <association property="teacher" javaType="teacher" select="getTeacherById" column="tid"/>
+    </resultMap>
+
+    <select id="getTeacherById" resultType="teacher">
+        select * from teacher where tid=#{tid}
+    </select>
+
+    <!-- 方式2（联合查询） -->
+    <select id="getStudentById2" resultMap="studentMap2">
+        select s.id id, s.name name, t.tid tid, t.name t_name
+        from student s,teacher t
+        where s.tid = t.tid and s.id=#{id}
+    </select>
+
+    <resultMap id="studentMap2" type="student">
+        <id property="id" column="id"/>
+        <association property="teacher" javaType="teacher">
+            <id property="tid" column="tid"/>
+            <result property="name" column="t_name"/>
+        </association>
+    </resultMap>
+</mapper>
